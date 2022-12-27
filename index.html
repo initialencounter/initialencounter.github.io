@@ -74,10 +74,10 @@
             var recent_num = rightarr[recent_id - 1];
             return recent_num;
         }
-        document.ontouchmove = function(e) {
-            var rencent_num = identi(rightarr, parseInt(e.touches[0].pageX), parseInt(e.touches[0].pageY));
-            // document.onmousemove = function (e) {
-            //     var rencent_num = identi(rightarr, parseInt(e.pageX), parseInt(e.pageY))
+//         document.ontouchmove = function(e) {
+//             var rencent_num = identi(rightarr, parseInt(e.touches[0].pageX), parseInt(e.touches[0].pageY));
+           document.onmousemove = function (e) {
+                var rencent_num = identi(rightarr, parseInt(e.pageX), parseInt(e.pageY))
             var bs1 = document.getElementById('id' + rencent_num);
             var mydate2 = new Date();
             t2 = mydate2.getMinutes() * 60000 + mydate2.getSeconds() * 1000 + mydate2.getMilliseconds();
