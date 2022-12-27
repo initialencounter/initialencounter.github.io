@@ -1,0 +1,289 @@
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
+<style>
+    text {
+        text-align: center;
+    }
+</style>
+
+<body style="overflow: hidden; position: fixed;
+            width: 100%">
+
+    <input type="text" id="color" style="position: absolute;width: 60px;height: 20px;background-color: rgb(29, 238, 245);top: 70px;left: 10px;" value="#00FFFF">
+    <button id='restart' style="position: absolute;width: 55px;height: 30px;background-color: rgb(243, 74, 246);top: 40px;left: 10px;">重开</button>
+    <button id='hard' style="position: absolute;width: 55px;height: 30px;background-color: rgb(22, 231, 246);top: 40px;left: 80px;">模式：easy</button>
+    <input id='bgd1' style="position: absolute;width: 60px;height: 20px;background-color: rgb(29, 238, 245);top: 10px;left: 10px;" value='5'>
+    <input id='bgd2' style="position: absolute;width: 60px;height: 20px;background-color: rgb(29, 238, 245);top: 10px;left: 80px;" value='50'>
+    <div id='parnt' style="position: absolute;background-color: grey;top: 100px;left: 40px;">
+    </div>
+    <text id='t' style="position: absolute;width: 80px;height: 20px;background-color: rgb(29, 238, 245);top: 10px;left: 160px;">
+        time</text>
+    <text id='t_re' style="position: absolute;width: 80px;height: 20px;background-color: rgb(29, 238, 245);top: 30px;left: 160px;">
+        0.000</text>
+    <text id='lastgametime' style="position: absolute;width: 80px;height: 20px;background-color: rgb(29, 238, 245);top: 50px;left: 160px;">best:</text>
+    <text id='gametimes' style="position: absolute;width: 80px;height: 20px;background-color: rgb(29, 238, 245);top: 70px;left: 160px;">局数：</text>
+    <text id='recentscore1' style="position: absolute; width: 150px; height: 20px;background-color: rgb(29, 238, 245);top: 10px;left: 240px;"></text>
+    <text id='recentscore2' style="position: absolute; width: 150px; height: 20px;background-color: rgb(29, 238, 245);top: 30px;left: 240px;"></text>
+    <text id='recentscore3' style="position: absolute; width: 150px; height: 20px;background-color: rgb(29, 238, 245);top: 50px;left: 240px;"></text>
+    <text id='recentscore4' style="position: absolute; width: 150px; height: 20px;background-color: rgb(29, 238, 245);top: 70px;left: 240px;"></text>
+    <script>
+        var audio = new window.Audio;
+        document.body.addEventListener("touchmove", bodyScroll, false);
+
+        function bodyScroll(event) {
+            event.preventDefault();
+        }
+        document.getElementById('restart').onclick = function(e) {
+            drawdiv();
+            num = 1;
+        }
+        document.getElementById('hard').onclick = function(e) {
+            if (easy == 0) {
+                easy = 1;
+                document.getElementById('hard').innerHTML = '模式：easy';
+                restart = 0;
+                drawdiv();
+                num = 1;
+            } else {
+                easy = 0;
+                document.getElementById('hard').innerHTML = '模式：normal';
+                drawdiv();
+                num = 1;
+            }
+
+        }
+
+
+
+
+        function shuffle(arr1) {
+            var l = arr1.length;
+            var index, temp;
+            while (l > 0) {
+                index = Math.floor(Math.random() * l);
+                temp = arr1[l - 1];
+                arr1[l - 1] = arr1[index];
+                arr1[index] = temp;
+                l--;
+            }
+            return arr1
+        }
+
+        function identi(rightarr, x, y) {
+            var recent_id = Math.ceil((x - 40) / gridsize) + (Math.ceil((y - 150) / gridsize)) * parseInt(mode);
+            var recent_num = rightarr[recent_id - 1];
+            return recent_num;
+        }
+        document.ontouchmove = function(e) {
+            var rencent_num = identi(rightarr, parseInt(e.touches[0].pageX), parseInt(e.touches[0].pageY));
+            // document.onmousemove = function (e) {
+            //     var rencent_num = identi(rightarr, parseInt(e.pageX), parseInt(e.pageY))
+            var bs1 = document.getElementById('id' + rencent_num);
+            var mydate2 = new Date();
+            t2 = mydate2.getMinutes() * 60000 + mydate2.getSeconds() * 1000 + mydate2.getMilliseconds();
+            if (rencent_num == num) {
+
+                audio.src = 'so.mp3';
+                audio.play();
+                t3 = Math.abs(t2 - t1);
+                d = parseInt(Math.sqrt(x3 * x3 + y3 * y3));
+                document.getElementById('t').innerHTML = t3 + 'ms';
+                t1 = t2;
+                if (easy == 1) {
+                    bs1.style.backgroundColor = 'white';
+                    bs1.innerHTML = '';
+                } else {
+                    // console.log('id' + lastnum, color, rencent_num);
+                    bs1.style.backgroundColor = 'white';
+                    document.getElementById('id' + lastnum).style.backgroundColor = color;
+                }
+                num++;
+                mode = String(document.getElementById('bgd1').value);
+                cont = mode * mode;
+                lastnum = rencent_num;
+                if (num > cont) {
+                    // console.log('ok')
+                    var mydate = new Date();
+                    t_re = mydate.getMinutes() * 60000 + mydate.getSeconds() * 1000 + mydate.getMilliseconds();
+                    t_re2 = t_re - starttime;
+                    t_min = Math.floor(t_re2 / 60000);
+                    t_sec = Math.floor((t_re2 - (t_min * 60000)) / 1000);
+                    t_msec = t_re2 - ((t_min * 60000) + (t_sec * 1000));
+                    if (t_msec < 10) {
+                        t_msec = '00' + t_msec;
+                    } else if (t_msec < 100) {
+                        t_msec = '0' + t_msec;
+                    }
+                    var time_text = t_min + ' : ' + t_sec + ' : ' + t_msec;
+                    // console.log(t_min + ' : ' + t_sec + ' : ' + t_msec, time_text)
+                    lsttb2.push(time_text + ',' + mode + '-' + easy);
+                    // console.log(t_re2 + ',' + mode + '-' + easy)
+                    
+                    lsttb.push(time_text + '--,' + mode + '-' + easy);
+                    cache = findbest(lsttb2, mode, easy)[0]
+                    document.getElementById('lastgametime').innerHTML = conversion(t_re2);
+                    document.getElementById('recentscore1').innerHTML = lsttb2[lsttb2.length-1];
+                    document.getElementById('recentscore2').innerHTML = lsttb2[lsttb2.length-2];
+                    document.getElementById('recentscore3').innerHTML = lsttb2[lsttb2.length-3];
+                    document.getElementById('recentscore4').innerHTML = lsttb2[lsttb2.length-4];
+
+                    gametimes++;
+                    document.getElementById('gametimes').innerHTML = '局数：' + gametimes;
+                    endtime = t2;
+
+                    var pure_arr = [];
+                    for (var i = 1; i < cont + 1; i++) {
+                        pure_arr.push(i);
+                    }
+                    drawdiv();
+                    num = 1;
+
+                }
+            }
+
+
+
+
+
+
+        };
+
+        var starttime, endtime, end;
+        var easy = 1;
+        var gametimes = 0;
+        var num = 1;
+        var t1;
+        var t2, t3, x2, y2, x3, y3, d, pure_arr, rightarr, mode, cont, color;
+        var lastnum = 1;
+        var gridsize = 50;
+        var lsttb = [];
+        var lsttb2 = ['0,','0,','0,','0,'];
+        var cache = [];
+        var best = 0;
+
+        drawdiv();
+
+        function conversion(t_re3) {
+            t_min = Math.floor(t_re3 / 60000);
+            t_sec = Math.floor((t_re3 - (t_min * 60000)) / 1000);
+            t_msec = t_re3 - ((t_min * 60000) + (t_sec * 1000));
+            if (t_msec < 10) {
+                t_msec = '00' + t_msec;
+            } else if (t_msec < 100) {
+                t_msec = '0' + t_msec;
+            }
+            var time_text = t_min + ' : ' + t_sec + ' : ' + t_msec;
+
+            return time_text
+
+        }
+
+        function sortt(arr) {
+            //log(arr)
+            k = arr[0]
+            var i = 1
+            var j = arr.length - 1
+            if (j == 0) {
+                return arr
+            }
+
+            while (i < j) {
+                if (arr[i] > k & arr[j] < k) {
+                    var cahe = arr[i]
+                    arr[i] = arr[j]
+                    arr[j] = cahe
+                }
+                if (arr[i] <= k) {
+                    i++
+                }
+                if (arr[j] >= k) {
+                    j--
+                }
+            }
+            if (arr[i] > k) {
+                var cahe1 = arr[0]
+                arr[0] = arr[i - 1]
+                arr[i - 1] = cahe1
+            } else {
+                var cahe2 = arr[0]
+                arr[0] = arr[i]
+                arr[i] = cahe2
+            }
+            var arr1 = sortt(arr.slice(0, i))
+            var arr2 = sortt(arr.slice(i, ))
+            var arr = arr1.concat(arr2)
+            return arr
+        }
+
+        function findbest(lssttb2, mode, easy) {
+            cache = [];
+            for (var i = lssttb2.length; i < 4; i++) {
+                lssttb2.push(0 + ',' + 0);
+            }
+            lssttb2.forEach(function(i, id) {
+                // console.log(id)
+                var splits = i.split(',');
+                if (splits[1] == mode + '-' + easy) {
+                    cache.push(splits[0]);
+                }
+            })
+            cache=sortt(cache)
+            for (var i = cache.length; i < 4; i++) {
+                cache.push(0);
+            }
+
+            return cache
+        }
+
+        function drawdiv() {
+
+            gridsize = document.getElementById('bgd2').value;
+            color = document.getElementById('color').value;
+            mode = String(document.getElementById('bgd1').value);
+            cont = mode * mode;
+            pure_arr = [];
+            for (var i = 1; i < cont + 1; i++) {
+                pure_arr.push(i);
+            }
+            rightarr = shuffle(pure_arr);
+            // console.log(rightarr)
+            var arr = [];
+            document.getElementById('parnt').style.width = mode * gridsize + 'px';
+            document.getElementById('parnt').style.height = mode * gridsize + 'px';
+            mode = String(document.getElementById('bgd1').value);
+            var cont = mode * mode;
+            rightarr.forEach(function(c, cd) {
+                var i = Math.floor((cd) / mode);
+                var j = (cd) % mode;
+                var id = 'id' + c;
+                var sty = '"position: absolute;width: ' + (gridsize - 2) + 'px;height: ' + (gridsize - 2) + 'px;background-color: ' + color + ';left:' + j * gridsize + 'px;top:' + i * gridsize + 'px;border: 1px solid yellow; font-size:' + gridsize / 2 + 'px;text-align:center;line-height:' + gridsize + 'px"';
+                arr.push('<text id = ' + id + ' style = ' + sty + ' > ' + c + '</text>');
+            });
+            document.getElementById('parnt').innerHTML = arr.join('');
+            var mydate2 = new Date();
+            t2 = mydate2.getMinutes() * 60000 + mydate2.getSeconds() * 1000 + mydate2.getMilliseconds();
+            starttime = t2;
+
+            return rightarr
+
+
+        }
+        var arr = [];
+
+        function timetable() {
+            var mydate = new Date();
+            t_re = mydate.getMinutes() * 60000 + mydate.getSeconds() * 1000 + mydate.getMilliseconds();
+            if (starttime < t_re) {
+                t_re2 = t_re - starttime;
+                t_min = Math.floor(t_re2 / 60000);
+                t_sec = Math.floor((t_re2 - (t_min * 60000)) / 1000);
+                t_msec = t_re2 - ((t_min * 60000) + (t_sec * 1000));
+                var time_text = t_min + ' : ' + t_sec + ' : ' + t_msec;
+                document.getElementById('t_re').innerHTML = time_text;
+            }
+
+
+        }
+        setInterval(timetable, 10);
+    </script>
+</body>
