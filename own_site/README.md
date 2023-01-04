@@ -4,6 +4,8 @@
 我们这个网站是以hopweb的PHP做后端，cpolar内网穿透。
 搭建成功以后，可以在外网访问
 
+[视频教程](https://www.bilibili.com/video/BV16g411W76J/?share_source=copy_web&vd_source=62a4486daf9a2bfb188a2f58e8349a67)
+[作者b站](https://space.bilibili.com/225995995)
 ## 需要用到的工具
 
 ### 网站后台--hopweb
