@@ -1,10 +1,11 @@
 <meta charset="UTF-8">
-<meta name="viewport" content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
+<meta name="viewport"
+    content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
 
 
 <body style="overflow: hidden;">
-    <div class="detail" >                  
-    <img src="nahida.jpeg" alt="" style="width:100%;height:100%">
+    <div class="detail">
+        <img src="nahida.jpeg" alt="" style="width:100%;height:100%">
     </div>
     <div id='bgd1' style="position: absolute;width: 50px;height: 31px;background-color: purple;top: 10px;left: 10px;">
         移动A关
@@ -12,20 +13,23 @@
     <div id='bgd2' style="position: absolute;width: 50px;height: 31px;background-color: purple;top: 10px;left: 120px;">
         移动B关
     </div>
-    <p id='px' style="position: absolute;width: 150px;height: 80px;background-color: rgb(29, 238, 245);top: 40px;left: 10px;font-size:40px;line-height:80px;">
+    <p id='px'
+        style="position: absolute;width: 150px;height: 80px;background-color: rgb(29, 238, 245);top: 40px;left: 10px;font-size:40px;line-height:80px;">
         px</p>
-    <p id='t' style="position: absolute;width: 150px;height: 80px;background-color: rgb(29, 238, 245);top: 110px;left: 10px;font-size:40px;line-height:80px;">
+    <p id='t'
+        style="position: absolute;width: 150px;height: 80px;background-color: rgb(29, 238, 245);top: 110px;left: 10px;font-size:40px;line-height:80px;">
         time</p>
-    <div id='box1' style="position: absolute;width: 100px;height: 100px;background-color: yellow;right: 20px;bottom: 200px;border: 2px solid yellow;">
+    <div id='box1'
+        style="position: absolute;width: 100px;height: 100px;background-color: yellow;right: 20px;bottom: 200px;border: 2px solid yellow;">
         A</div>
-    <div id='box2' style="position: absolute;width: 100px;height: 100px;background-color: #00FFFF;right: 20px;bottom: 50px;border: 2px solid #00FFFF;">
+    <div id='box2'
+        style="position: absolute;width: 100px;height: 100px;background-color: #00FFFF;right: 20px;bottom: 50px;border: 2px solid #00FFFF;">
         B</div>
     <script>
         function btset(id, text) {
             var btn = 0
-            document.getElementById(id).ontouchstart = function(e) {
+            document.getElementById(id).ontouchstart = function (e) {
                 document.getElementById(id).style.backgroundColor = 'grey'
-
                 switch (btn) {
                     case 0:
                         btn = 1;
@@ -37,37 +41,25 @@
                         document.getElementById(id).innerHTML = text + '关';
                         document.getElementById(id).style.backgroundColor = 'purple'
                         break;
-
-
                 }
-
             }
         }
 
         function boxmove(id1, id2) {
-
-            document.getElementById(id2).ontouchmove = function(e) {
-
+            document.getElementById(id2).ontouchmove = function (e) {
                 var vle = document.getElementById(id1).style.backgroundColor;
                 //document.getElementById(id2).innerHTML=vle;
                 if (vle == 'pink') {
-
                     document.getElementById(id2).style.left = e.touches[0].screenX - 50;
                     document.getElementById(id2).style.top = e.touches[0].screenY - 100;
-
-
                 }
             }
-
-
         }
-
-
 
         function boxdown(id, clo) {
 
             var bs1 = document.getElementById(id)
-            bs1.ontouchstart = function(e) {
+            bs1.ontouchstart = function (e) {
                 // audio.src='so.mp3'
                 // audio.play()
                 x2 = parseInt(e.touches[0].screenX)
@@ -101,9 +93,7 @@
         btset('bgd2', 'B')
         boxmove('bgd1', 'box1')
         boxmove('bgd2', 'box2')
-        var t1 = 0
-        var x1 = 0
-        var y1 = 0
+        var [t1, x1, y1] = [0, 0, 0]
         var t2, t3, x2, y2, x3, y3, d
         boxdown('box1', 'yellow')
         boxdown('box2', '#00FFFF')

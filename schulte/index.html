@@ -23,7 +23,7 @@
     <text id='t_re' style="position: absolute;width: 80px;height: 20px;background-color: rgb(29, 238, 245);top: 30px;left: 160px;">
         0.000</text>
     <text id='lastgametime' style="position: absolute;width: 80px;height: 20px;background-color: rgb(29, 238, 245);top: 50px;left: 160px;">best:</text>
-    <text id='gametimes' style="position: absolute;width: 80px;height: 20px;background-color: rgb(29, 238, 245);top: 70px;left: 160px;">局数：</text>
+    <text id='gametimes' style="position: absolute;width: 120px;height: 20px;background-color: rgb(29, 238, 245);top: 70px;left: 160px;">局数：</text>
     <text id='recentscore1' style="position: absolute; width: 90px; height: 20px;background-color: rgb(29, 238, 245);top: 10px;left: 240px;"></text>
     <text id='recentscore2' style="position: absolute; width: 90px; height: 20px;background-color: rgb(29, 238, 245);top: 30px;left: 240px;"></text>
     <text id='recentscore3' style="position: absolute; width: 90px; height: 20px;background-color: rgb(29, 238, 245);top: 50px;left: 240px;"></text>
@@ -52,11 +52,7 @@
                 drawdiv();
                 num = 1;
             }
-
         }
-
-
-
 
         function shuffle(arr1) {
             var l = arr1.length;
@@ -95,7 +91,6 @@
                     bs1.style.backgroundColor = 'white';
                     bs1.innerHTML = '';
                 } else {
-                    // console.log('id' + lastnum, color, rencent_num);
                     bs1.style.backgroundColor = 'white';
                     document.getElementById('id' + lastnum).style.backgroundColor = color;
                 }
@@ -104,7 +99,6 @@
                 cont = mode * mode;
                 lastnum = rencent_num;
                 if (num > cont) {
-                    // console.log('ok')
                     var mydate = new Date();
                     t_re = mydate.getMinutes() * 60000 + mydate.getSeconds() * 1000 + mydate.getMilliseconds();
                     t_re2 = t_re - starttime;
@@ -117,9 +111,7 @@
                         t_msec = '0' + t_msec;
                     }
                     var time_text = t_min + ' : ' + t_sec + ' : ' + t_msec;
-                    // console.log(t_min + ' : ' + t_sec + ' : ' + t_msec, time_text)
                     lsttb2.push(time_text + ',' + mode + '-' + easy);
-                    // console.log(t_re2 + ',' + mode + '-' + easy)
                     
                     lsttb.push(time_text + '--,' + mode + '-' + easy);
                     cache = findbest(lsttb2, mode, easy)[0]
@@ -139,15 +131,8 @@
                     }
                     drawdiv();
                     num = 1;
-
                 }
             }
-
-
-
-
-
-
         };
 
         var starttime, endtime, end;
@@ -175,13 +160,10 @@
                 t_msec = '0' + t_msec;
             }
             var time_text = t_min + ' : ' + t_sec + ' : ' + t_msec;
-
             return time_text
-
         }
 
         function sortt(arr) {
-            //log(arr)
             k = arr[0]
             var i = 1
             var j = arr.length - 1
@@ -223,7 +205,6 @@
                 lssttb2.push(0 + ',' + 0);
             }
             lssttb2.forEach(function(i, id) {
-                // console.log(id)
                 var splits = i.split(',');
                 if (splits[1] == mode + '-' + easy) {
                     cache.push(splits[0]);
@@ -233,7 +214,6 @@
             for (var i = cache.length; i < 4; i++) {
                 cache.push(0);
             }
-
             return cache
         }
 
@@ -248,7 +228,6 @@
                 pure_arr.push(i);
             }
             rightarr = shuffle(pure_arr);
-            // console.log(rightarr)
             var arr = [];
             document.getElementById('parnt').style.width = mode * gridsize + 'px';
             document.getElementById('parnt').style.height = mode * gridsize + 'px';
@@ -265,13 +244,9 @@
             var mydate2 = new Date();
             t2 = mydate2.getMinutes() * 60000 + mydate2.getSeconds() * 1000 + mydate2.getMilliseconds();
             starttime = t2;
-
             return rightarr
-
-
         }
         var arr = [];
-
         function timetable() {
             var mydate = new Date();
             t_re = mydate.getMinutes() * 60000 + mydate.getSeconds() * 1000 + mydate.getMilliseconds();
@@ -283,8 +258,6 @@
                 var time_text = t_min + ' : ' + t_sec + ' : ' + t_msec;
                 document.getElementById('t_re').innerHTML = time_text;
             }
-
-
         }
         setInterval(timetable, 10);
     </script>
